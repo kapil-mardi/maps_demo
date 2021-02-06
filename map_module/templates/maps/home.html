@@ -1,0 +1,89 @@
+{% extends "maps/base.html" %} {% block content %}
+<section>
+
+<form
+  method="post"
+  id="mapsForm"
+  data-district-url="{% url 'ajax_load_district' %}"
+  data-taluka-url="{% url 'ajax_load_taluka' %}"
+  novalidate
+>
+  {% csrf_token %}
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="id_state">Select State</label>
+        <select id="id_state" class="form-control">
+          <option value="">---------</option>
+          {% for state in states %}
+          <option value="{{ state.pk }}">{{ state.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="id_category">Select Category</label>
+        <select id="id_category" class="form-control">
+          <option value="">---------</option>
+          {% for category in categories %}
+          <option value="{{ category.pk }}">
+            {{ category.get_name_display }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="id_district">Select District</label>
+        <select id="id_district" class="form-control">
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="id_taluka">Select taluka</label>
+        <select id="id_taluka" class="form-control">
+        </select>
+      </div>
+
+      <button type="submit">Submit</button>
+    </div>
+  </div>
+</form>
+</section>
+<script>
+  $("#id_state, #id_category").change(function () {
+    $('#id_district').empty()
+    $('#id_taluka').empty()
+    var url = $("#mapsForm").attr("data-district-url");
+    var stateId = $("#id_state").val() || -1;
+    var categoryId = $("#id_category").val() || -1;
+
+    $.ajax({
+      url: url,
+      data: {
+        state: stateId,
+        category: categoryId 
+      },
+      success: function (data) {
+        $("#id_district").html(data);
+      },
+    });
+  });
+
+  $("#id_district").change(function () {
+    $('#id_taluka').empty()
+    var url = $("#mapsForm").attr("data-taluka-url");
+    var districtId = $("#id_district").val() || -1;
+
+    $.ajax({
+      url: url,
+      data: {
+        district: districtId
+      },
+      success: function (data) {
+        $("#id_taluka").html(data);
+      },
+    });
+  });
+</script>
+{% endblock content %}
