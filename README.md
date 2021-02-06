@@ -4,9 +4,11 @@
     - clone this repository to your local machine
     - create virtual environment in the root directory of the application
     - make sure that the name of the environment forlder is venv
-     ```
+
+     ```shell
         python3 -m -venv venv
      ```
+
     - Before any library installation make sure to activate the environment 
         - For windows 
             - Go to /venv/Scripts/
@@ -15,7 +17,8 @@
             - Go to /venv/bin
             - execute ./activate shell file
     - Install the 3rd party dependacies 
-    ```
+
+    ```shell
         pip install -r requirement.txt
     ```
 
@@ -23,7 +26,9 @@
     - Application already has the database file with it
     - It has been populated with sample data for Maharashtra -> Urban -> Kolhapur
     - After activating the environment execute
-    ```
+
+    ```shell
         python manage.py runserver
     ```
+    
     - Visit http://localhost:8080/maps/
