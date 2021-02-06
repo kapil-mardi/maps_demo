@@ -5,7 +5,7 @@
     - create virtual environment in the root directory of the application
     - make sure that the name of the environment forlder is venv
 
-     ```shell
+     ```
         python3 -m -venv venv
      ```
 
